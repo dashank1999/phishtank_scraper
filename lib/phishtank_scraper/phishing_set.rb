@@ -7,7 +7,7 @@ class	PhishingSet
   end
 
   def scrape_parse
-    # data = ph.at('.data').search('tr')
+    data = ph.at('.data').search('tr')
   end
 
   def each

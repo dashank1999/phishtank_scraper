@@ -10,6 +10,7 @@ Gem::Specification.new do |s|
   s.homepage    = 'http://rubygems.org/gems/phishtank-scraper'
   s.license       = 'MIT'
 
-  s.add_dependency 'mechanize'
+  s.add_dependency 'nokogiri'
+  s.add_dependency 'open-uri'
   s.add_dependency 'random_user_agent'
 end
