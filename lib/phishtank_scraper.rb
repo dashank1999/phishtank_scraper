@@ -1,23 +1,32 @@
-require 'phishtank_scraper/phishing_set'
+require './lib/phishtank_scraper/phishing_set'
 
 class PhishtankScraper
-  attr_reader :phishings
 
+  attr_reader :path
   def initialize(domain="phishtank.com")
-    @root_url = "http://#{domain}/phish_search.php?"
-    @phishings = []
+    @domain = domain
+    @path = build_path 
   end
 
-  def scrape(start_page: 1, finish_page: 1, options = {})
+  # returns an array of detections
+  def scrape(start_page: 1, finish_page: 1, options: {})
     raise ArgumentError if start_page > finish_page
 
-    actives =  "&active=" + (@options[:active] || "y")
-    valid =  "&valid=" + (@options[:valid] || "y")
-
-    start_page.upto(finish_page) do |page_index|
-      phishing_set = PhishingSet.new("#{@root_url}#{active}#{valid}&Search=Search")
-    end
-    
+    @path = build_path(options)
+    (start_page..finish_page).map do |page_index|
+      PhishingSet.new(@path).all
+    end.flatten
   end
 
+  private
+  def build_path(options={})
+    "http://#{@domain}/" + if options.any?
+      actives =  "&active=" + (@options[:active] || "y")
+      valid =  "&valid=" + (@options[:valid] || "y")
+
+      "phish_search.php?#{active}#{valid}&Search=Search"
+    else
+      "phish_archive.php"
+    end
+  end
 end
