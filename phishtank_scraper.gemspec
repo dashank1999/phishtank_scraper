@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.description = "Scrapes Phishtank submissions with pagination"
   s.authors     = ["Marlon Méndez"]
   s.email       = 'marlonmendezg@gmail.com'
-  s.files       = ["lib/phishtank_scraper.rb", "lib/phishtank_scraper/phishing_set.rb"]
+  s.files       = ["lib/phishtank_scraper.rb", "lib/phishtank_scraper/phishing_set.rb", "lib/phishtank_scraper/site.rb"]
   s.homepage    = 'http://rubygems.org/gems/phishtank-scraper'
   s.license       = 'MIT'
 

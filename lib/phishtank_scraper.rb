@@ -1,32 +1,41 @@
 require './lib/phishtank_scraper/phishing_set'
+require './lib/phishtank_scraper/site'
 
 class PhishtankScraper
 
-  attr_reader :path
-  def initialize(domain="phishtank.com")
-    @domain = domain
-    @path = build_path 
+  # attr_reader :path
+  def initialize(domain)
+    @site = Site.new(domain)
+    @range = (0..0)
   end
 
-  # returns an array of detections
-  def scrape(start_page: 1, finish_page: 1, options: {})
-    raise ArgumentError if start_page > finish_page
+  # returns an array of detections in the pages range 
+  # options: 
+  # active: "All", "n", "y", "u"
+  # valid: "All", "n", "y", "u"
+  def page_scrape(range=@range, options={})
+    build_range(range)
 
-    @path = build_path(options)
-    (start_page..finish_page).map do |page_index|
-      PhishingSet.new(@path).all
+    @range.map do |page_index|
+      PhishingSet.new(@site.build_path(page_index, options)).all
     end.flatten
   end
 
-  private
-  def build_path(options={})
-    "http://#{@domain}/" + if options.any?
-      actives =  "&active=" + (@options[:active] || "y")
-      valid =  "&valid=" + (@options[:valid] || "y")
+  # returns an array of detections from id to last submitted id
+  # options: 
+  # active: "All", "n", "y", "u"
+  # valid: "All", "n", "y", "u"
+  def id_scrape(since, options={})
+    page_at = PhishingSet.new(@site.home).page_at_id(since)
 
-      "phish_search.php?#{active}#{valid}&Search=Search"
-    else
-      "phish_archive.php"
-    end
+    (0..page_at).map do |page_index|
+      PhishingSet.new(@site.build_path(page_index, options)).all
+    end.flatten
+      
   end
+
+  private
+  def build_range(value)
+    @range = value.class.eql? Range ? value : (value..value)
+  end 
 end

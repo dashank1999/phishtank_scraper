@@ -9,6 +9,7 @@ class	PhishingSet
 
   def initialize(url)
     @url = url
+
     @page = Nokogiri::HTML(open(@url, 'User-Agent' => RandomUserAgent.randomize))
     @all = scrape_parse
   end
@@ -42,6 +43,14 @@ class	PhishingSet
     detail_page.at("#widecol").at_xpath("div/div[3]/b/text()").to_s
   end
 
+  def first
+    @all.first
+  end
+
+  def page_at_id(id)
+    last_subm_id = self.first[:id].to_i
+    ((last_subm_id - id + 1)/20).round # 20 items per page
+  end
   # def each
   #   @phishings.each{ |ph| yield ph }
   # end
