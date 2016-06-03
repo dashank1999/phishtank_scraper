@@ -3,7 +3,7 @@ require 'random_user_agent'
 require 'open-uri'
 
 class	PhishingSet
-  # include Enumerable
+  include Enumerable
 
   attr_reader :url, :all
 
@@ -51,8 +51,9 @@ class	PhishingSet
     last_subm_id = self.first[:id].to_i
     ((last_subm_id - id + 1)/20).round # 20 items per page
   end
-  # def each
-  #   @phishings.each{ |ph| yield ph }
-  # end
+
+  def each
+    @all.each{ |ph| yield ph }
+  end
 
 end

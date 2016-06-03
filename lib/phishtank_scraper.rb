@@ -3,8 +3,8 @@ require './lib/phishtank_scraper/site'
 
 class PhishtankScraper
 
-  # attr_reader :path
-  def initialize(domain)
+  attr_reader :site, :range
+  def initialize(domain="phishtank.com")
     @site = Site.new(domain)
     @range = (0..0)
   end
@@ -28,10 +28,11 @@ class PhishtankScraper
   def id_scrape(since, options={})
     page_at = PhishingSet.new(@site.home).page_at_id(since)
 
-    (0..page_at).map do |page_index|
+    phset = (0..page_at).map do |page_index|
       PhishingSet.new(@site.build_path(page_index, options)).all
     end.flatten
-      
+    
+    phset.delete_if {|ph| ph[:id].to_i < since}
   end
 
   private

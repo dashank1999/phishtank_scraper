@@ -1,5 +1,7 @@
 class Site
-  def initialize(domain="phishtank.com")
+  attr_reader :domain
+
+  def initialize(domain)
     @domain = domain
   end
 
@@ -8,8 +10,8 @@ class Site
   end
   
   def build_path(page_index=0, options={})
-    active = @options[:active] 
-    valid = @options[:valid] 
+    active = options[:active] 
+    valid = options[:valid] 
 
     path = if active or valid
       actives =  "&active=" + (active || "y")
@@ -23,4 +25,7 @@ class Site
     "http://#{@domain}/#{path}"
   end
  
+  def build_detail_path(submission_id)
+    "http://#{@domain}/phish_detail.php?phish_id=#{submission_id}"
+  end
 end
