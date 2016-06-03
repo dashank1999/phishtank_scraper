@@ -1,8 +1,9 @@
+# Prvides routes and URLs
 class Site
   attr_reader :domain
 
-  def initialize(domain)
-    @domain = domain
+  def initialize(url)
+    @domain = url
   end
 
   def home
@@ -22,10 +23,10 @@ class Site
       "phish_archive.php?page=#{page_index}"
     end
 
-    "http://#{@domain}/#{path}"
+    "#{@domain}/#{path}"
   end
  
   def build_detail_path(submission_id)
-    "http://#{@domain}/phish_detail.php?phish_id=#{submission_id}"
+    "#{@domain}/phish_detail.php?phish_id=#{submission_id}"
   end
 end

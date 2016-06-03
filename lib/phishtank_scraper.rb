@@ -1,11 +1,12 @@
 require './lib/phishtank_scraper/phishing_set'
 require './lib/phishtank_scraper/site'
 
+# Director interface for scraping
 class PhishtankScraper
-
   attr_reader :site, :range
-  def initialize(domain="phishtank.com")
-    @site = Site.new(domain)
+
+  def initialize(url="http://phishtank.com")
+    @site = Site.new(url)
     @range = (0..0)
   end
 
@@ -14,9 +15,7 @@ class PhishtankScraper
   # active: "All", "n", "y", "u"
   # valid: "All", "n", "y", "u"
   def page_scrape(range=@range, options={})
-    build_range(range)
-
-    @range.map do |page_index|
+    build_range(range).map do |page_index|
       PhishingSet.new(@site.build_path(page_index, options)).all
     end.flatten
   end
@@ -37,6 +36,6 @@ class PhishtankScraper
 
   private
   def build_range(value)
-    @range = value.class.eql? Range ? value : (value..value)
+    @range = value.class.eql?(Range) ? value : (value..value)
   end 
 end

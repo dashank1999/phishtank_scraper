@@ -1,16 +1,16 @@
 Gem::Specification.new do |s|
-  s.name        = 'phishtank-scraper'
+  s.name        = 'phishtank_scraper'
   s.version     = '0.0.1'
-  s.date        = '2016-05-27'
+  s.date        = '2016-06-03'
   s.summary     = "Scrapes Phishtank submissions"
-  s.description = "Scrapes Phishtank submissions with pagination"
+  s.description = "Scrapes Phishtank submissions given a page interval or an id"
   s.authors     = ["Marlon Méndez"]
   s.email       = 'marlonmendezg@gmail.com'
   s.files       = ["lib/phishtank_scraper.rb", "lib/phishtank_scraper/phishing_set.rb", "lib/phishtank_scraper/site.rb"]
   s.homepage    = 'http://rubygems.org/gems/phishtank-scraper'
   s.license       = 'MIT'
 
-  s.add_dependency 'nokogiri'
-  s.add_dependency 'open-uri'
-  s.add_dependency 'random_user_agent'
+  s.add_dependency 'nokogiri', '~> 1.6', '>= 1.6.7.2'
+  # s.add_dependency 'open-uri'
+  # s.add_dependency 'random_user_agent'
 end
