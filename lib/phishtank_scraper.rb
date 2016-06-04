@@ -1,5 +1,5 @@
-require './lib/phishtank_scraper/phishing_set'
-require './lib/phishtank_scraper/site'
+require 'phishtank_scraper/phishing_set'
+require 'phishtank_scraper/site'
 
 # Director interface for scraping
 class PhishtankScraper
@@ -25,6 +25,7 @@ class PhishtankScraper
   # active: "All", "n", "y", "u"
   # valid: "All", "n", "y", "u"
   def id_scrape(since, options={})
+    since = since.to_i
     page_at = PhishingSet.new(@site.home).page_at_id(since)
 
     phset = (0..page_at).map do |page_index|
