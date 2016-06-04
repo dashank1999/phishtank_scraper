@@ -46,7 +46,8 @@ Available:
     valid: "All", "n", "y", "u"    
 
 
-Returned array 
+# Returned array 
+```
     [
       {
         id: "4141252",
@@ -66,6 +67,7 @@ Returned array
       },
       ...
     ]
+```
 
 ## Tested in
 ruby 2.2.0
